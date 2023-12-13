@@ -41,17 +41,32 @@ public class Reserva {
 
 	}
 
-	public void updateData(Date checkIn, Date checkOut) {
+	public String updateData(Date checkIn, Date checkOut) {
+
+		Date agora = new Date();
+		if (checkIn.before(agora) || checkOut.before(agora)) {
+
+			return "Error in reservation: Reservation dates for update must be future dates";
+
+		} 
+		if (!checkIn.after(checkIn)) {
+
+			return "Error in reservation: Check-out date must be after check-in date";
+
+		}
 
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
+		
+		return null;
 
 	}
 
 	@Override
 	public String toString() {
 		return "Quarto" + salaNumero + ", checkIn=" + sdf.format(checkIn)
-				+ ", checkOut=" + sdf.format(checkOut) + ":" + duracao()+"=> noite:";
+				+ ", checkOut=" + sdf.format(checkOut) + ":" + duracao()
+				+ "=> noite:";
 	}
 
 }

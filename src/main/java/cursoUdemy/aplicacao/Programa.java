@@ -17,46 +17,38 @@ public class Programa {
 		int numero = entrada.nextInt();
 
 		System.out.print("Data do check-In (dd/MM/yyyy)");
-		Date checkin = sdf.parse(entrada.next());
+		Date checkIn = sdf.parse(entrada.next());
 
 		System.out.print("Data do check-out  (dd/MM/yyyy)");
 		Date checkOut = sdf.parse(entrada.next());
 
-		if (!checkOut.after(checkin)) {
+		if (!checkOut.after(checkIn)) {
 			System.out.println(
 					"Error in reservation: Check-out date must be after check-in date");
 
 		} else {
 
-			Reserva reserva = new Reserva(numero, checkin, checkOut);
+			Reserva reserva = new Reserva(numero, checkIn, checkOut);
 			System.out.println("Reserva" + reserva);
 
 			System.out.println();
 			System.out.println("Entre com data para reserva.");
 
-			checkin = sdf.parse(entrada.next());
+			checkIn = sdf.parse(entrada.next());
 
 			System.out.print("Data do check-out  (dd/MM/yyyy)");
 			checkOut = sdf.parse(entrada.next());
 
-			Date agora = new Date();
-			if (checkin.before(agora) || checkOut.before(agora)) {
+			String error = reserva.updateData(checkIn, checkOut);
+			if (error != null) {
 
-				System.out.println(
-						"Error in reservation: Reservation dates for update must be future dates");
-
-			} else if (!checkin.after(checkin)) {
-
-				System.out.println(
-						"Error in reservation: Check-out date must be after check-in date");
-
+				System.out.println("Error da reserva !" + error);
 			} else {
-				reserva.updateData(checkin, checkOut);
 				System.out.println("Reserva :" + reserva);
 
 			}
-			reserva.updateData(checkin, checkOut);
-			System.out.println("Reserva" + reserva);
+
+			System.out.println("Reserva :" + reserva);
 
 		}
 
